@@ -1,0 +1,445 @@
+{
+	"info": {
+		"_postman_id": "eac99779-bb29-44f0-87be-95fb441ebe0e",
+		"name": "SocialSphere",
+		"description": "A social media (MERN) app which includes features like authentication of users, fetching posts, adding posts, liking/commenting posts, and managing friends.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25676629"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const resBody = pm.response.json();\r",
+									"const token = resBody.token;\r",
+									"\r",
+									"pm.globals.set('token', token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"abdulrafay@gmail.com\",\r\n    \"password\": \"abdulrafay\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fullName",
+									"value": "Abdul Rafay",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "me.rafay@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/Abdul Rafay/Other Stuff/Pictures/photos/photo1.jpg"
+								},
+								{
+									"key": "dob",
+									"value": "April 30, 2004",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "bio",
+									"value": "Programmer",
+									"type": "text"
+								},
+								{
+									"key": "contact",
+									"value": "abdulrafaykhatana@email.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Sialkot, Pakistan",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Gender ",
+									"value": "Male",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "User authentication which includes login and register."
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Fetch All Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/posts?searchTags=Nature",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "searchTags",
+									"value": "Nature"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch User Post",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/posts/64e0bcbc62c2c54cc49ba072",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"posts",
+								"64e0bcbc62c2c54cc49ba072"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "desc",
+									"value": "BMW Eyes ",
+									"type": "text"
+								},
+								{
+									"key": "searchTags",
+									"value": "BMW, Headlights, Car",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/Abdul Rafay/Other Stuff/Pictures/images/wallpaper.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/posts/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like/Unlike Post",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/posts/64e0c0ef62c2c54cc49ba07c/like",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"posts",
+								"64e0c0ef62c2c54cc49ba07c",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"Not bad\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/posts/64e0c0ef62c2c54cc49ba07c/comment",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"posts",
+								"64e0c0ef62c2c54cc49ba07c",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Fetching posts, adding posts, liking and commenting posts."
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Fetch User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/user/64e0bcbc62c2c54cc49ba072",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"64e0bcbc62c2c54cc49ba072"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add/Remove Friends",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/user/friends/64e717e16c199d9bd6392b3a",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"friends",
+								"64e717e16c199d9bd6392b3a"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Fetching authorized user, editing info and managing their friends."
+		},
+		{
+			"name": "Root",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"abdulrafay@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/assets/1692449821949-457102411.jpg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"assets",
+						"1692449821949-457102411.jpg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Not Found",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/random",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"random"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		}
+	]
+}
